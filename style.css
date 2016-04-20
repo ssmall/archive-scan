@@ -1,0 +1,30 @@
+.hidden
+{
+    display: none;
+}
+
+#loadedImage
+{
+    float: right;
+}
+
+textarea
+{
+    min-width: 400px;
+    min-height: 300px;
+}
+
+textarea#keywords
+{
+    min-width: 100px;
+}
+
+input[type=number]
+{
+    width: 30px;
+}
+
+input.error
+{
+    border: dotted 1px red;
+}

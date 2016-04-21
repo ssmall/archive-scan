@@ -162,8 +162,13 @@ $(function () {
         }
 
         window.selectImage = function (evt) {
-            $loadedImg.attr('src', URL.createObjectURL(evt.target.files[0]));
-            $loadedImg.removeClass('hidden');
+            var imageFile = evt.target.files[0];
+            if (imageFile.size > 50*1024*1024){
+                console.warn("Image is larger than 50mb; skipping preview");
+            } else {
+                $loadedImg.attr('src', URL.createObjectURL(imageFile));
+                $loadedImg.removeClass('hidden');
+            }
         };
 
         window.selectText = function (evt) {

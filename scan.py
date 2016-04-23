@@ -8,7 +8,7 @@ import pyocr
 import pyocr.builders
 
 
-def extract_text(filename):
+def extract_text(filename, output_filename):
     tools = pyocr.get_available_tools()
     if len(tools) == 0:
         print("No OCR tool found")
@@ -28,14 +28,18 @@ def extract_text(filename):
         builder=pyocr.builders.TextBuilder()
     )
 
-    txtfilename = "{}.txt".format(os.path.splitext(filename)[0])
-    with open(txtfilename, 'w') as txtfile:
+
+    with open(output_filename, 'w') as txtfile:
         txtfile.write(txt.encode("UTF-8"))
 
-    print "Text contents saved as '{}'".format(txtfilename)
+    print "Text contents saved as '{}'".format(output_filename)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Archive a scan of an album page")
     parser.add_argument('filename', type=str)
+    parser.add_argument('-d', type=str, dest='destdir')
     args = parser.parse_args()
-    extract_text(args.filename)
+    output_filename = "{}.txt".format(os.path.splitext(args.filename)[0])
+    if args.destdir is not None:
+        output_filename = os.path.join(args.destdir, os.path.basename(output_filename))
+    extract_text(args.filename, output_filename)
